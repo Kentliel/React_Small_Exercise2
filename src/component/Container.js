@@ -1,33 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const IncrementNumber = () => {
     const [number1, setnumber1] = useState(0)
     const [number2, setnumber2] = useState(0)
-    const currentValue = 0;
-    const [sum, setsum] = useState("+");
+    let [currentValue, setCurrentValue] = useState(0);
+    const [sum, setsum] = useState([""]);
 
-    const calculator = () => {
-        switch (number1 == number2) {
-            case sum == "+":
-                return {
-                    currentValue: `${number1 + number2}`,
-                };
-            case sum == "-":
-                return {
-                    currentValue: `${number1 - number2}`,
-                };
-            case sum == "*":
-                return {
-                    currentValue: `${number1 * number2}`,
-                };
-            case sum == "/":
-                return {
-                    currentValue: `${number1 / number2}`,
-                };
-            default:
-                return calculator;
+    useEffect(() => {
+        const calculator = () => {
+            console.log(sum[0]);
+            switch (true) {
+                case sum[0] == "+":
+                    setCurrentValue(number1 + number2);
+                    break;
+                case sum[0] == "-":
+                    setCurrentValue(number1 - number2);
+                    break;
+                case sum[0] == "*":
+                    setCurrentValue(number1 * number2);
+                    break;
+                case sum[0] == "/":
+                    setCurrentValue(number1 / number2);
+                    break;
+                default:
+                    console.log("hola");
+                    break;
+            }
         }
-    }
+        calculator();
+    }, [sum])
     const Summation1 = () => {
         setnumber1(number1 + 1);
     }
@@ -54,7 +55,7 @@ const IncrementNumber = () => {
                 </div>
                 <div className="representeNumbers">
                     <button onClick={Summation1} className="first">{number1}</button>
-                    <select onChange={event => setsum(event.target.value)}>
+                    <select onChange={event => setsum([event.target.value])}>
                         <option value={"+"}>+</option>
                         <option value={"-"}>-</option>
                         <option value={"*"}>*</option>
